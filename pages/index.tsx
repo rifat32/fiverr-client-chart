@@ -4,20 +4,48 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { endOfMonth, startOfYear, addMonths } from 'date-fns'
 import { users } from './api/hello'
+import { dateCheck } from '../utils/date-check'
 
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false
 })
 
 const Home: NextPage = () => {
+
   const year = endOfMonth(startOfYear(new Date()))
   // Array of months from Feb/Mar to current month Feb
   const monthArray = Array.from({ length: 13 }, (_, i) => {
+
     return addMonths(new Date(year), i - 11)
       .toISOString()
       .slice(0, 10)
   })
-console.log(users)
+
+
+
+
+const  usersDataArray:number[] = Array.from({ length: 13 }, (_, i) => {
+         return 0
+    });
+
+   users.map(el => {
+     let date = new Date(el.date).toISOString()
+     .slice(0, 10)
+    for(let i = 0; i<monthArray.length; i++) {
+      let fromDate = monthArray[i - 1]
+      let toDate = monthArray[i]
+      if(fromDate && toDate){
+        if(dateCheck(fromDate,toDate,date)){
+            usersDataArray[i - 1] = usersDataArray[i - 1] + 1   
+        }
+      }  
+    }
+
+   })
+
+ 
+
+  //  console.log(usersDataArray)
   return (
     <div className={styles.container}>
       <Head>
@@ -76,7 +104,9 @@ console.log(users)
             {
               name: 'series1',
               // TODO: get data parsed to fit the year
-              data: [31, 120, 10, 28, 51, 18, 59]
+              // data: [31, 120, 10, 28, 51, 18, 59,99,99,99,99,99,99,99]
+               data: usersDataArray
+              
             }
           ]}
         />
