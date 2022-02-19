@@ -45,7 +45,7 @@ const  usersDataArray:number[] = Array.from({ length: 13 }, (_, i) => {
 
  
 
-  //  console.log(usersDataArray)
+    console.log(usersDataArray)
   return (
     <div className={styles.container}>
       <Head>

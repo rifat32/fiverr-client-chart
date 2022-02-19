@@ -65,9 +65,4 @@ export const users = [
     name: 'John Goe',
     date: "2022-02-17T11:00:07.758+00:00"
   },
-  {
-    id: '11',
-    name: 'John Goe',
-    date: "2022-02-17T11:00:07.758+00:00"
-  },
 ]
